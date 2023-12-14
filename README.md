@@ -32,6 +32,8 @@ Response Variable: **`result`** \(1\|0\)
 
 We encoded the **`league`** with OneHotEncoder() and engineered a new feature, **`TrueCount`**, that counts the **`first`** objectives each team earned. All other features remained the same as the other nominal features are boolean and the quantitative features are discrete. 
 
+<iframe src="assets/barchart_of_league.html" width="800" height="600"></iframe>
+
 
 ## Conclusion
 
