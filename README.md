@@ -24,11 +24,11 @@ In our baseline model, we intend to predict the result of the game from the earl
 
 Quantitative Features: **`goldat10`**,  **`xpat10`**, **`csat10`**, **`golddiffat10`**, **`xpdiffat10`**, **`csdiffat10`**, **`killsat10`**, **`assistsat10`**, **`deathsat10`**, **`goldat15`**, **`xpat15`**, **`csat15`**, **`golddiffat15`**, **`xpdiffat15`**, **`csdiffat15`**, **`killsat15`**,**`assistsat15`**, **`deathsat15`**
 
-**``** 
+
 Nominal Features: **`league`**, **`firstblood`**, **`firstdragon`**, **`firstherald`**, **`firsttower`**
 
 
-Response Variable: result (1|0)
+Response Variable: **`result`** (1|0)
 
 We encoded the **`league`** with OneHotEncoder() and engineered a new feature, **`TrueCount`**, that counts the **`first`** objectives each team earned. All other features remained the same as the other nominal features are boolean and the quantitative features are discrete. 
 
