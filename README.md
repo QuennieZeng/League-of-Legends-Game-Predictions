@@ -30,14 +30,14 @@ In our baseline model, we intend to predict the result of the game from the earl
 
 **Response Variable:** **`result`** \(1\|0\)
 
-We encoded the **`league`** with OneHotEncoder() and engineered a new feature, **`TrueCount`**, that counts the **`first`** objectives each team earned. All other features remained the same as the other nominal features are boolean and the quantitative features are discrete. 
+We encoded the **`league`** with `OneHotEncoder()` and engineered a new feature, `TrueCountTransformer()`, that counts the **`first`** objectives each team earned. All other features remained the same as the other nominal features are boolean and the quantitative features are discrete. 
 
 <iframe src="assets/barchart_of_league.html" width="800" height="600"></iframe>
 
 
 ## Conclusion
 
-Our accuracy was about 63.42%. This is a low moderate performance. We believe this model is moderate as the accuracy is only slightly higher than 50%, which is a model that only predicts based on random chance. We did not include later game statistics, which would have been more accurate to the result of the game. 
+Our accuracy was about **63.42%**. This is a low moderate performance. We believe this model is moderate as the accuracy is only slightly higher than 50%, which is a model that only predicts based on random chance. We did not include later game statistics, which would have allowed our model to be more accurate to the result of the game. 
 
 ---
 
@@ -51,20 +51,19 @@ We looked to add features by using the following transformers:
 
 **MomentumFeatureEngineering:**
 
-To quantify the momentum of the game, we assessed statistical differences at 15 and 10 minutes. Our approach involved standardizing these differences and computing their average. This process provides a concise and rough estimate of the game's momentum, where a positive value indicates the team's improved performance and a negative value suggests the opposite.
+To quantify the momentum of the game, we assessed statistical differences at 10 and 15 minutes. Our approach involved standardizing these differences and computing their average. This process provides a concise and rough estimate of the game's momentum, where a positive value indicates the team's improved performance and a negative value suggests the opposite.
 
 **StandardScalar:** 
 
-This built-in feature would standardize the columns we run in it. We used it to standardize our numerical columns that did not include differences in them since we used those columns in our MomentumFeatureEngineering transformer. Using this would help make all of our information standardized by removing the mean and scaling to unit variance. This allows our data to be mean-centered, equally scaled, and normally distributed, all making the algorithm perform better. 
+This built-in feature would standardize the columns we run in it. We used it to standardize our numerical columns that did not include differences in them since we used those columns in our `MomentumFeatureEngineering()` transformer. Using this would help make all of our information standardized by removing the mean and scaling to unit variance. This allows our data to be mean-centered, equally scaled, and normally distributed, all making the algorithm perform better. 
 
 **Overfitting:**
 
-While creating the model, we ran into the problem of overfitting, as our training accuracy was at 100%, while our validation accuracy was around 75%. To address this issue, we examined the features and considered whether feature engineering could help improve generalization.
+When creating the model, we ran into the problem of overfitting, as our training accuracy was at 100%, while our validation accuracy was around 75%. To address this issue, we examined the features and considered whether feature engineering could help improve generalization.
 
-To start, we took out the columns with ‘diff’ to make the data more simple, as we had included the columns with **`diff`** in our ‘momentum’ feature.
+To start, we took out the columns with **‘diff’** to make the data more simple, as we had included the columns with **`diff`** in our ‘momentum’ feature.
 
 We also considered the heat maps and dropped the columns in which there wasn't as big of a difference between the winning and losing teams. We decided to drop **`csat10`**, **`csdiffat10`**, **`killsat10`**, **`assistat10`**, **`deathsat10`**, **`csat15`**, **`killsat15`**, and **`assistat15`** after looking at the graphs.
-
 
 
 Heatmap result for **`csat10`**:
@@ -95,15 +94,15 @@ Heatmap result for **`assistat15`**:
 
 ## Conclusion:
 After testing, our result is Training Accuracy: **.9782** and Validation Accuracy: **0.7613**.
-Our Validation accuracy went up so it is not overfitting as much. We dropped the columns that we mentioned earlier (Columns that included the word **`diff`** in the title and others that were dropped due to visual analysis of their heatmaps and distributions).
+Our validation accuracy has increased, indicating a reduction in overfitting. We dropped the columns that we mentioned earlier. (columns that included the word **`diff`** in the title and others that were dropped due to visual analysis of their heatmaps and distributions)
 
 ## Overfitting (again):
 
-It’s important to address that it would be difficult to control the overfitting of our data as there is limited predictive power of our early game statistics, high variability, and there incomplete data.
+It’s important to address that it would be difficult to control the overfitting of our data as there is limited predictive power of our early game statistics, high variability, and incomplete data.
 
 There is limited predicted power in early games when it comes to determining the outcome of a match. This limitation arises due to factors such as evolving strategies, dynamic team interactions, and individual player performances, all of which introduce complexity and potential variability in the final result. Thus, it would be difficult to determine the outcome of a game from early game statistics alone as it may not capture the complexity of the match.
 
-There is also the question of whether the team chose a team composition that prioritizes early-game success or late-game success. Teams strategically select and ban champions based on whether they would like a strong early game or a strong late game. This tactical decision  is driven by the desire to either excel in the early stages of a match or focus on late-game dominance, aiming to scale up the power of their champions. The intricacies of champion selection thus reflect a team's deliberate approach to optimize performance in specific phases of the game.
+There is also the question of whether the team chose a team composition that prioritizes early-game success or late-game success. Teams strategically select and ban champions based on whether they would like a strong early game or a strong late game. This tactical decision is driven by the desire to either excel in the early stages of a match or focus on late-game dominance, aiming to scale up the power of their champions. The intricacies of champion selection thus reflect a team's deliberate approach to optimize performance in specific phases of the game.
 
 
 Violin plot result for **`csat15`**:
@@ -126,12 +125,12 @@ The modeling algorithm we chose, in the end, was the `RandomForestClassifer()`. 
 
 ## Hyperparameters and Selection Method:
 
-The optimal hyperparameters for the RandomForestClassifier were determined through a systematic search. The chosen values were {'randomforestclassifier__max_depth': 10, 'randomforestclassifier__min_samples_split': 18}.
+The optimal hyperparameters for the `RandomForestClassifier()` were determined through a systematic search. The chosen values were {'randomforestclassifier__max_depth': 10, 'randomforestclassifier__min_samples_split': 18}.
 
 We employed a rigorous approach to hyperparameter tuning, utilizing a parameter grid and executing a grid search with 5-fold cross-validation. This process ensured the identification of hyperparameters that maximize the model's performance.
 
 ## Model Performance Improvement:
-Compared to the baseline model, the final RandomForestClassifier demonstrated improved performance. It improved our accuracy by around **12.27%**, from 63.42% to 75.69%. Its versatility, robustness, and controlled overfitting, achieved through carefully selected hyperparameters, contributed to enhanced predictive capabilities and overall model effectiveness.
+Compared to the baseline model, the final `RandomForestClassifier()` demonstrated improved performance. It improved our accuracy by around **12.27%**, from 63.42% to 75.69%. Its versatility, robustness, and controlled overfitting, achieved through carefully selected hyperparameters, contributed to enhanced predictive capabilities and overall model effectiveness.
 
 ---
 
