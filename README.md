@@ -93,7 +93,7 @@ Heatmap result for **`assistat15`**:
 
 ## Conclusion:
 After testing, our result is Training Accuracy: **.9782** and Validation Accuracy: **0.7613**.
-Our Validation accuracy went up so it is not overfitting as much. We dropped the columns that we mentioned earlier (Columns that included the word **`diff`** in the title and others that were dropped due to visual analysis of their heatmaps and distributions.
+Our Validation accuracy went up so it is not overfitting as much. We dropped the columns that we mentioned earlier (Columns that included the word **`diff`** in the title and others that were dropped due to visual analysis of their heatmaps and distributions).
 
 ## Overfitting (again):
 
